@@ -16,6 +16,7 @@ public enum WikidataError: Error, LocalizedError, Sendable, Equatable {
     /// An id that is not a `Q`-number.
     case badIdentifier(String)
 
+    /// A one-line reason, for a CLI or a log.
     public var errorDescription: String? {
         switch self {
         case .http(let code): return "Wikidata answered HTTP \(code)"

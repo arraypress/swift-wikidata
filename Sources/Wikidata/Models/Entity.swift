@@ -1,5 +1,5 @@
 //
-//  Models.swift
+//  Entity.swift
 //  Wikidata
 //
 //  Created by David Sherlock on 2026.
@@ -7,42 +7,18 @@
 
 import Foundation
 
-/// A search result — enough to choose between candidates.
-public struct SearchHit: Sendable, Codable, Equatable, Identifiable {
-    /// The item id — `Q615`.
-    public let id: String
-    public let label: String
-    /// The one-line disambiguator: "Argentine association football player".
-    public let description: String?
-    /// The canonical concept URI.
-    public let uri: String?
-
-    private enum CodingKeys: String, CodingKey { case id, label, description, concepturi }
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = (try? container.decode(String.self, forKey: .id)) ?? ""
-        self.label = ((try? container.decodeIfPresent(String.self, forKey: .label)) ?? nil) ?? ""
-        self.description = (try? container.decodeIfPresent(String.self, forKey: .description)) ?? nil
-        self.uri = (try? container.decodeIfPresent(String.self, forKey: .concepturi)) ?? nil
-    }
-
-    public init(id: String, label: String, description: String? = nil, uri: String? = nil) {
-        self.id = id
-        self.label = label
-        self.description = description
-        self.uri = uri
-    }
-}
-
 /// A resolved entity — the knowledge-graph record.
 ///
 /// Item references are returned as **names**, not `Q`-numbers: an answer of
 /// "human, association football player" is useful where "Q5, Q937857" is not.
 public struct Entity: Sendable, Codable, Equatable, Identifiable {
+    /// The Q-number — `Q42`.
     public let id: String
+    /// Its name in the requested language.
     public let label: String?
+    /// The one-line disambiguator — "British author".
     public let description: String?
+    /// Other names it goes by, in the requested language.
     public let aliases: [String]
     /// What kind of thing this is — P31 "instance of", resolved.
     public let types: [String]

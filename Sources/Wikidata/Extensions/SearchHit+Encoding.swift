@@ -14,6 +14,7 @@ import Foundation
 extension SearchHit {
     private enum OutputKeys: String, CodingKey { case id, label, description, uri }
 
+    /// Writes the flattened shape, not the one the API sends.
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: OutputKeys.self)
         try container.encode(id, forKey: .id)

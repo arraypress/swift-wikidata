@@ -21,6 +21,8 @@
 //  The fix is to ask for both codes and fall back through them.
 //
 
+//
+
 import Foundation
 
 /// Picking a display string out of a per-language block.
@@ -59,10 +61,4 @@ enum Labels {
         }
         return out
     }
-}
-
-/// One `{ "language": "en", "value": "…" }` entry.
-public struct LanguageValue: Decodable, Sendable, Equatable {
-    public let language: String
-    public let value: String
 }
